@@ -22,15 +22,12 @@ run;
 proc print data=flights (firstobs=1 obs=14);
 run;
 
-
-
 /*   With proc logistic, the stepwise option goes through the model selection procedure for the predictors listed in the model statement*/
 proc logistic data=flights descending;
 	class CARRIER DEST;
 	model ARR_DEL15 = MONTH WEEK_DAY CARRIER DEST DEP_TIME_ORD ARR_TIME_ORD DISTANCE / selection=stepwise
 		slentry=0.1 slstay=0.1;
 run;
-
 
 /* running logistic regression analysis on delay based on WEEK_DAY */
 proc genmod data=flights descending;
@@ -43,7 +40,6 @@ proc genmod data=flights descending;
 model ARR_DEL15 = WEEK_DAY / dist=bin link=logit type3	;
 run;
 
-
 /* running logistic regression analysis on low birth weight based on age */
 proc genmod data=flights descending;
 class WEEK_DAY ARR_TIME_ORD;
@@ -55,31 +51,9 @@ proc genmod data=flights descending;
 	model ARR_DEL15 = WEEK_DAY ARR_TIME_ORD / dist=bin link=logit;
 run;
 
-
-
-
-
 /*   With proc logistic, the stepwise option goes through the model selection procedure for the predictors listed in the model statement*/
 proc logistic data=flights descending;
 class WEEK_DAY ARR_TIME_ORD;
 	model ARR_DEL15 = WEEK_DAY ARR_TIME_ORD WEEK_DAY*ARR_TIME_ORD / selection=stepwise
 		slentry=0.1 slstay=0.1;
 run;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
