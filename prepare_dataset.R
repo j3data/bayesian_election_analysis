@@ -197,21 +197,23 @@ nrow(PHL)
 
 # The dataset has been cleaned and is ready for analysis.
 
-# To save a single R object such as a data frame, function, or statistical model results 
-# it's best to use .rds file type. The benefit of .rds is it only saves a representation 
-# of the object and not the name. (Source: http://uc-r.github.io/exporting)
+# The .rds file preserves data types such as factors and dates eliminating the need
+# to redefine data types after loading the file. In addition, .rds saves a representation 
+# of the object and not the name.
 
 # save a single object to file
 saveRDS(PHL, "dataset.rds")
 
 
 
-
 # Resources
-#
+
 # Flight data from Bureau of Transportation Statistics (BTS)
 # https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time
 # https://www.transtats.bts.gov/TableInfo.asp
-#
+
 # Review of nominal, ordinal and interval scales
 # http://www.perceptualedge.com/articles/dmreview/quant_vs_cat_data.pdf
+
+# Reading and Writing Data Files
+# http://mgimond.github.io/ES218/Week02b.html
