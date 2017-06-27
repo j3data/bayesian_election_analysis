@@ -191,17 +191,17 @@ anyNA(PHL)
 nrow(PHL)
 # n = 72,498
 
-#############################
-### Export cleaned dataset ##
-#############################
+#####################################
+### Export cleaned dataset to .Rds ##
+#####################################
 
 # The dataset has been cleaned and is ready for analysis.
 
 # The .rds file preserves data types such as factors and dates eliminating the need
-# to redefine data types after loading the file. In addition, .rds saves a representation 
-# of the object and not the name.
+# to redefine data types after loading the file. The .rds file saves a representation 
+# of the object and not the name. Finally, the .rds file is compressed.
 
-# save a single object to file
+# Save final dataset to file
 saveRDS(PHL, "dataset.rds")
 
 
