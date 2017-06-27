@@ -11,14 +11,15 @@ library(chron)
 ###    ETL    ####
 ##################
 
-### Source data includes all US airports, ~5.6M rows
-### Only rows with Origin=Philadelphia will be loaded
+### 12 files of monthly data are downloaded to a local directory
+### The source data includes all US airports, ~5.6M rows
+### Only rows with Origin=Philadelphia are loaded
 
-# set data file directory
+# set working directory
 file_path <- 'C:\\statistics\\scratch\\flights\\data\\'
 setwd(file_path)
 
-# create list of files two load by name pattern.
+# create list of files to load by name pattern
 temp = list.files(pattern="*.csv")
 
 # stream in and rbind tables keeping rows where Origin=PHL
@@ -50,7 +51,7 @@ PHL.tmp1 <- FLIGHTS.PHL[Cancelled==0]
 # FILTER: Flights not diverted 
 PHL.tmp2 <- PHL.tmp1[Diverted==0]
 
-# DROP: Exclude columns containing diverted data (i.e. Div* columns)
+# DROP: Drop columns containing diverted flight data (i.e. Div* columns)
 PHL.tmp3 <- PHL.tmp2[,-c(65:110)]
 
 dim(PHL.tmp3)
@@ -83,7 +84,6 @@ snip
 # CRSElapsedTime          CRS Elapsed Time of Flight, in Minutes
 # Distance                Distance between airports (miles)
 # DistanceGroup           Distance Intervals, every 250 Miles, for Flight Segment
-
 
 ## RESPONSE VARIABLES
 
@@ -125,7 +125,7 @@ PHL$ArrivalDelayGroups.nom      <- factor(PHL$ArrivalDelayGroups)
 PHL$DepTimeBlk.nom              <- factor(PHL$DepTimeBlk)
 PHL$ArrTimeBlk.nom              <- factor(PHL$ArrTimeBlk)
 
-# Convert variable to ordered factor (Ordinal)
+# Convert variables to ordered factor (Ordinal)
 PHL$Year.ord                    <- factor(PHL$Year, ordered = TRUE)
 PHL$Quarter.ord                 <- factor(PHL$Quarter, ordered = TRUE)
 PHL$Month.ord                   <- factor(PHL$Month, ordered = TRUE)
@@ -143,7 +143,7 @@ PHL$ArrivalDelayGroups.ord      <- factor(PHL$ArrivalDelayGroups, ordered = TRUE
 PHL$FlightDate.dt               <- as.Date(PHL$FlightDate)
 
 # Parse Departure Time (CRSDepTime)
-# Use regular expressions convert numeric to datetime format
+# Using regular expressions, convert text to datetime format
 PHL$CRSDepTime.dt               <- chron(times=sub("(.*)(\\d\\d)", "\\1:\\2:00", PHL$CRSDepTime))
 
 ## Parse Arrival Time (CRSArrTime)
@@ -161,7 +161,7 @@ PHL[CRSArrTime.num > 9 & CRSArrTime.num < 60]
 PHL[CRSArrTime.num > 59,CRSArrTime.dt:=chron(times=sub("(.*)(\\d\\d)", "\\1:\\2:00", CRSArrTime))]
 PHL[CRSArrTime.num > 59,]
 
-# Convert Cause of Delay to numeric and change NAs to 0s
+# Convert 'Cause of Delay' to numeric and change NAs to 0s
 PHL[is.na(CarrierDelay),CarrierDelay:=0]
 PHL[is.na(WeatherDelay),WeatherDelay:=0]
 PHL[is.na(NASDelay),NASDelay:=0]
@@ -186,7 +186,7 @@ snip
 # Check for NAs
 sapply(PHL,function(x) sum(is.na(x)))
 anyNA(PHL)
-# FALSE...No missing.
+# FALSE...No NAs.
 
 nrow(PHL)
 # n = 72,498
