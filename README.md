@@ -1,3 +1,3 @@
-# Predict Delayed Flights Using Logistic Regression
+# Bayesian Analysis the Results of the 2016 Election
 
-Analyze US Department of Transportation data, identify significant predictors, and develop a model for probability of delay.
+Analyzing election returns as they happen and update predictions for not-yet-called states.
